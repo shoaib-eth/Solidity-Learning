@@ -1,1 +1,1 @@
-# Solidity Notes
+# Solidity and Smart Contracts 
