@@ -16,8 +16,6 @@ contract Variables {
     }
 }
 
-
-
 /* 
 Variables
 There are 3 types of variables in Solidity
@@ -29,4 +27,4 @@ state
 declared outside a function
 stored on the blockchain
 global (provides information about the blockchain)
-*/ 
+*/
