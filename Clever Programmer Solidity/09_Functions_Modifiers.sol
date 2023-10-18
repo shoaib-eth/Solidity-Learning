@@ -9,7 +9,7 @@ contract Modifiers {
         myNumber += _value;
     }
 
-    function getTheValue() public onlyOwner view returns (uint256) {
+    function getTheValue() public view onlyOwner returns (uint256) {
         return myNumber;
     }
 
