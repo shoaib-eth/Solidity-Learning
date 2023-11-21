@@ -32,7 +32,17 @@ contract SimpleStorage {
     }
 }
 
-contract SimpleStorage2 {}
+contract SimpleStorage2 {
+    string public text;
+
+    function store(string memory _text) public {
+        text = _text;
+    }
+
+    function retrieve() public view returns (string memory) {
+        return text;
+    }
+}
 
 contract SimpleStorage3 {}
 
