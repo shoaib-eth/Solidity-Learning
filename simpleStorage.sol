@@ -5,14 +5,14 @@ pragma solidity 0.8.19;
 // pragma solidity ^0.8.0;
 // pragma solidity >=0.8.0 <0.9.0;
 
-contract SimpleStorage {
+contract simpleStorage {
     uint256 myFavoriteNumber;
 
     struct Person {
         uint256 favoriteNumber;
         string name;
     }
-    
+
     // uint256[] public anArray;
     Person[] public listOfPeople;
 
@@ -32,7 +32,7 @@ contract SimpleStorage {
     }
 }
 
-contract SimpleStorage2 {
+contract SimpleStorage1 {
     string public text;
 
     function store(string memory _text) public {
@@ -44,7 +44,7 @@ contract SimpleStorage2 {
     }
 }
 
-contract SimpleStorage3 {
+contract SimpleStorage2 {
     uint256 favoriteNumber;
 
     function store(uint256 _favoriteNumber) public {
@@ -57,7 +57,7 @@ contract SimpleStorage3 {
     }
 }
 
-contract SimpleStorage4 {
+contract SimpleStorage3 {
     bool favoriteBool;
 
     function store(bool _favoriteBool) public {
