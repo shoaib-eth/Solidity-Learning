@@ -44,6 +44,17 @@ contract SimpleStorage2 {
     }
 }
 
-contract SimpleStorage3 {}
+contract SimpleStorage3 {
+    uint256 favoriteNumber;
+
+    function store(uint256 _favoriteNumber) public {
+        favoriteNumber = _favoriteNumber;
+    }
+
+    // view = read only
+    function retrieve() public view returns (uint256) {
+        return favoriteNumber;
+    }
+}
 
 contract SimpleStorage4 {}
