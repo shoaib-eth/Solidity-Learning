@@ -57,4 +57,15 @@ contract SimpleStorage3 {
     }
 }
 
-contract SimpleStorage4 {}
+contract SimpleStorage4 {
+    bool favoriteBool;
+
+    function store(bool _favoriteBool) public {
+        favoriteBool = _favoriteBool;
+    }
+
+    // view = read only
+    function retrieve() public view returns (bool) {
+        return favoriteBool;
+    }
+}
