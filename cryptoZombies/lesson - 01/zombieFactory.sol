@@ -5,9 +5,6 @@ contract ZombieFactory {
     event NewZombie(uint256 zombieId, string name, uint256 dna);
 
     uint256 dnaDigits = 16;
-    // Add missing function declaration
-    function _createZombie(string memory _name, uint256 _dna) private {
-        // Function implementation goes here
     uint256 dnaModulus = 10**dnaDigits;
 
     struct Zombie {
