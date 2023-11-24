@@ -6,13 +6,13 @@ pragma solidity ^0.8.19;
 import {SimpleStorage} from "./SimpleStorage.sol";
 
 contract StorageFactory {
-    SimpleStorage[] public listOfSimpleStorageContracts;
+    SimpleStorage[] public listOfSimpleStorageContracts;  // array of SimpleStorage contracts. Each contract is an instance of SimpleStorage contract.
 
     function createSimpleStorageContract() public {
-        SimpleStorage simpleStorageContractVariable = new SimpleStorage();
+        SimpleStorage simpleStorageContractVariable = new SimpleStorage();  
         // SimpleStorage simpleStorage = new SimpleStorage();
-        listOfSimpleStorageContracts.push(simpleStorageContractVariable);
-    }
+        listOfSimpleStorageContracts.push(simpleStorageContractVariable); // push the contract instance to the array 
+    } 
 
     function sfStore(
         uint256 _simpleStorageIndex,
