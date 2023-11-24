@@ -1,13 +1,33 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.19; 
+pragma solidity ^0.8.19;
 
-import {SimpleStorage, SimpleStorage1, SimpleStorage2, SimpleStorage3} from "./simpleStorage.sol";  // import the contract SimpleStorage from the file simpleStorage.sol 
+// import {SimpleStorage, SimpleStorage2} from "./SimpleStorage.sol";
+import {SimpleStorage} from "./SimpleStorage.sol";
 
-contract storageFactory {
-    SimpleStorage public mySimpleStorageContract; // create a variable of type SimpleStorage and call it mySimpleStorageContract 
+contract StorageFactory {
+    SimpleStorage[] public listOfSimpleStorageContracts;
 
-    function createSimpleStorage() public {
-        mySimpleStorageContract = new SimpleStorage(); // create an instance of SimpleStorage and assign it to the variable mySimpleStorageContract 
+    function createSimpleStorageContract() public {
+        SimpleStorage simpleStorageContractVariable = new SimpleStorage();
+        // SimpleStorage simpleStorage = new SimpleStorage();
+        listOfSimpleStorageContracts.push(simpleStorageContractVariable);
+    }
+
+    function sfStore(
+        uint256 _simpleStorageIndex,
+        uint256 _simpleStorageNumber
+    ) public {
+        // Address
+        // ABI
+        // SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).store(_simpleStorageNumber);
+        listOfSimpleStorageContracts[_simpleStorageIndex].store(
+            _simpleStorageNumber
+        );
+    }
+
+    function sfGet(uint256 _simpleStorageIndex) public view returns (uint256) {
+        // return SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).retrieve();
+        return listOfSimpleStorageContracts[_simpleStorageIndex].retrieve();
     }
 }
