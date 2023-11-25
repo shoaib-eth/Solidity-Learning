@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract NewContract {
-    mapping(uint256 => string) public myMap;
+    mapping(uint256 => string) public myMap;     
 
     function addValue(uint256 key, string memory value) public {
         myMap[key] = value;
