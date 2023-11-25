@@ -54,7 +54,6 @@ contract Primitives {
     address public defaultAddr; // 0x0000000000000000000000000000000000000000
 }
 
-
 /* 
 Primitive Data Types
 Here we introduce you to some primitive data types available in Solidity.
