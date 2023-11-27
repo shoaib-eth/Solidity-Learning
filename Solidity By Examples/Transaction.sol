@@ -26,3 +26,28 @@ contract Transaction {
         return address(this).balance; // Return the contract's balance
     }
 }
+
+
+contract TransactionDetails {
+    Transaction private transactionContract;
+
+    constructor(address _transactionContract) {
+        transactionContract = Transaction(_transactionContract);
+    }
+
+    function getBuyer() external view returns (address) {
+        return transactionContract.buyer();
+    }
+
+    function getAmount() external view returns (uint) {
+        return transactionContract.amount();
+    }
+
+    function getEtherPrice() external view returns (uint) {
+        return transactionContract.etherPrice();
+    }
+
+    function getBalance() external view returns (uint) {
+        return transactionContract.getBalance();
+    }
+}
