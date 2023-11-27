@@ -27,6 +27,8 @@ contract Transaction {
     }
 }
 
+
+// Another contract to interact with the Transaction contract
 contract TransactionDetails {
     Transaction private transactionContract;
 
