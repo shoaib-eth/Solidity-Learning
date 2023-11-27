@@ -13,7 +13,10 @@ contract Transaction {
     }
 
     function buyEther(uint _amount, uint _etherPrice) external payable {
-        require(msg.value == _amount * _etherPrice, "Incorrect amount of Ether sent");
+        require(
+            msg.value == _amount * _etherPrice,
+            "Incorrect amount of Ether sent"
+        );
         amount += _amount;
         etherPrice = _etherPrice;
     }
