@@ -27,7 +27,6 @@ contract Transaction {
     }
 }
 
-
 contract TransactionDetails {
     Transaction private transactionContract;
 
@@ -35,18 +34,22 @@ contract TransactionDetails {
         transactionContract = Transaction(_transactionContract);
     }
 
+    // Get the address of the buyer
     function getBuyer() external view returns (address) {
         return transactionContract.buyer();
     }
 
+    // Get the amount of ether bought
     function getAmount() external view returns (uint) {
         return transactionContract.amount();
     }
 
+    // Get the price of ether
     function getEtherPrice() external view returns (uint) {
         return transactionContract.etherPrice();
     }
 
+    // Get the balance of the transaction contract
     function getBalance() external view returns (uint) {
         return transactionContract.getBalance();
     }
