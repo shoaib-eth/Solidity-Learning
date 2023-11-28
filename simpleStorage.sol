@@ -55,15 +55,15 @@ contract SimpleStorage2 {
 }
 
 contract SimpleStorage3 {
-        bool favoriteBool;
+    bool favoriteBool;
 
-        // Store the value of favoriteBool
-        function store(bool _favoriteBool) public {
-            favoriteBool = _favoriteBool;
-        }
-
-        // Retrieve the value of favoriteBool (read-only)
-        function retrieve() public view returns (bool) {
-            return favoriteBool;
-        }
+    // Store the value of favoriteBool
+    function store(bool _favoriteBool) public {
+        favoriteBool = _favoriteBool;
     }
+
+    // Retrieve the value of favoriteBool (read-only)
+    function retrieve() public view returns (bool) {
+        return favoriteBool;
+    }
+}
