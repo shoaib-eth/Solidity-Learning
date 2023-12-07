@@ -1,25 +1,40 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 contract Transaction {
-    address payable public owner;
-
+    address public owner;
+    
     constructor() {
-        owner = payable(msg.sender);
+        owner = msg.sender;
+    }
+    
+    function transferOwnership(address newOwner) public {
+        require(msg.sender == owner, "Only the owner can transfer ownership");
+        owner = newOwner;
+    }
+    
+    function getOwner() public view returns (address) {
+        return owner;
+    }
+    
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+}
+
+contract TransactionDetails {
+    Transaction private transactionContract;
+
+    constructor(address transactionContractAddress) {
+        transactionContract = Transaction(transactionContractAddress);
     }
 
-    function transfer(address payable recipient, uint256 amount) external {
-        require(
-            msg.sender == owner,
-            "Only the contract owner can initiate transfers"
-        );
-        require(
-            address(this).balance >= amount,
-            "Insufficient balance in the contract"
-        );
-
-        recipient.transfer(amount);
+    function getTransactionOwner() public view returns (address) {
+        return transactionContract.getOwner();
     }
 
-    receive() external payable {}
+    function getContractBalance() public view returns (uint256) {
+        return transactionContract.getBalance();
+    }
 }
