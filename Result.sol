@@ -1,6 +1,4 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
+// Contract for managing exam results
 contract Result {
     struct ExamResult {
         uint256 marks;
@@ -41,9 +39,11 @@ contract Result {
         subjectResults[msg.sender] = SubjectMarks(subject1, subject2, subject3);
     }
 
-    function getSubjectMarks(
-        address student
-    ) public view returns (uint256, uint256, uint256) {
+    function getSubjectMarks(address student)
+        public
+        view
+        returns (uint256, uint256, uint256)
+    {
         return (
             subjectResults[student].subject1,
             subjectResults[student].subject2,
@@ -52,11 +52,13 @@ contract Result {
     }
 }
 
+// Contract for calculating percentage and division based on marks
 contract ResultCalculator {
-    function calculatePercentage(
-        uint256 totalMarks,
-        uint256 obtainedMarks
-    ) public pure returns (uint256) {
+    function calculatePercentage(uint256 totalMarks, uint256 obtainedMarks)
+        public
+        pure
+        returns (uint256)
+    {
         require(totalMarks > 0, "Total marks should be greater than zero");
         require(
             obtainedMarks >= 0 && obtainedMarks <= totalMarks,
@@ -67,9 +69,11 @@ contract ResultCalculator {
         return percentage;
     }
 
-    function calculateDivision(
-        uint256 percentage
-    ) public pure returns (string memory) {
+    function calculateDivision(uint256 percentage)
+        public
+        pure
+        returns (string memory)
+    {
         require(
             percentage >= 0 && percentage <= 100,
             "Percentage should be between 0 and 100"
