@@ -24,4 +24,24 @@ contract Result {
         );
         return results[student].marks;
     }
+    
+    struct SubjectMarks {
+        uint256 subject1;
+        uint256 subject2;
+        uint256 subject3;
+    }
+    
+    mapping(address => SubjectMarks) public subjectResults;
+    
+    function submitSubjectMarks(uint256 subject1, uint256 subject2, uint256 subject3) public {
+        subjectResults[msg.sender] = SubjectMarks(subject1, subject2, subject3);
+    }
+    
+    function getSubjectMarks(address student) public view returns (uint256, uint256, uint256) {
+        return (
+            subjectResults[student].subject1,
+            subjectResults[student].subject2,
+            subjectResults[student].subject3
+        );
+    }
 }
