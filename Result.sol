@@ -25,5 +25,3 @@ contract Result {
         return results[student].marks;
     }
 }
-
-
