@@ -1,4 +1,6 @@
-// Contract for managing exam results
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 contract Result {
     struct ExamResult {
         uint256 marks;
