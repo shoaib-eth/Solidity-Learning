@@ -1,69 +1,29 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-pragma solidity 0.8.19;
+contract simpleStorage {
+    uint myNumber;
 
-contract SimpleStorage {
-    uint256 myFavoriteNumber;
-
+    // Array of a Person
     struct Person {
-        uint256 favoriteNumber;
         string name;
+        uint age;
     }
 
-    // uint256[] public anArray;
-    Person[] public listOfPeople;
+    Person[] public listOfPeoples;
 
-    mapping(string => uint256) public nameToFavoriteNumber;
+    mapping (string => uint) public nameToAge;
 
-    function store(uint256 _favoriteNumber) public virtual {
-        myFavoriteNumber = _favoriteNumber;
+    function store(uint _myNumber) public virtual  {
+        myNumber = _myNumber;
     }
 
-    function retrieve() public view returns (uint256) {
-        return myFavoriteNumber;
+    function retrieveNumber() public view returns (uint){
+        return myNumber;
     }
 
-    function addPerson(string memory _name, uint256 _favoriteNumber) public {
-        listOfPeople.push(Person(_favoriteNumber, _name));
-        nameToFavoriteNumber[_name] = _favoriteNumber;
-    }
-}
-
-contract SimpleStorage1 {
-    string public text;
-
-    function store(string memory _text) public {
-        text = _text;
-    }
-
-    function retrieve() public view returns (string memory) {
-        return text;
-    }
-}
-
-contract SimpleStorage2 {
-    uint256 favoriteNumber;
-
-    function store(uint256 _favoriteNumber) public {
-        favoriteNumber = _favoriteNumber;
-    }
-
-    // view = read only
-    function retrieve() public view returns (uint256) {
-        return favoriteNumber;
-    }
-}
-
-contract SimpleStorage3 {
-    bool favoriteBool;
-
-    // Store the value of favoriteBool
-    function store(bool _favoriteBool) public {
-        favoriteBool = _favoriteBool;
-    }
-
-    // Retrieve the value of favoriteBool (read-only)
-    function retrieve() public view returns (bool) {
-        return favoriteBool;
+    function addPerson(string memory _name, uint _age) public {
+        listOfPeoples.push(Person(_name, _age));
+        nameToAge[_name] = _age;
     }
 }
