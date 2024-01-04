@@ -12,14 +12,16 @@ contract InheritContract is simpleStorage {
         return "Hello!";
     }
 
-    event LogMessage(string message);
+    event LogMessage(string message); // Event Declaration is here (It is not a function)
 
-    string public lastMessage;
+    string public lastMessage; // State Variable Declaration is here (It is not a function)
 
     function isEven(uint256 _num) public {
+        // Function Declaration is here
         if (_num % 2 == 0) {
+            // State Variable is accessed here
             lastMessage = "Number is Even";
-            emit LogMessage(lastMessage);
+            emit LogMessage(lastMessage); // Event is emitted here
         } else {
             lastMessage = "Number is Odd";
             emit LogMessage(lastMessage);
@@ -27,6 +29,7 @@ contract InheritContract is simpleStorage {
     }
 
     function retrieveIsEven() public view returns (string memory) {
-        return lastMessage;
+        // Function Declaration is here
+        return lastMessage; // State Variable is accessed here
     }
 }
