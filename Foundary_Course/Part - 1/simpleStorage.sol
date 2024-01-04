@@ -12,13 +12,13 @@ contract simpleStorage {
 
     Person[] public listOfPeoples;
 
-    mapping (string => uint) public nameToAge;
+    mapping(string => uint) public nameToAge;
 
-    function store(uint _myNumber) public virtual  {
+    function store(uint _myNumber) public virtual {
         myNumber = _myNumber;
     }
 
-    function retrieveNumber() public view returns (uint){
+    function retrieveNumber() public view returns (uint) {
         return myNumber;
     }
 
