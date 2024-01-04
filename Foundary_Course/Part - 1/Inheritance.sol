@@ -11,4 +11,22 @@ contract InheritContract is simpleStorage {
     function sayHello() public pure returns (string memory) {
         return "Hello!";
     }
+
+    event LogMessage(string message);
+
+    string public lastMessage;
+
+    function isEven(uint256 _num) public {
+        if (_num % 2 == 0) {
+            lastMessage = "Number is Even";
+            emit LogMessage(lastMessage);
+        } else {
+            lastMessage = "Number is Odd";
+            emit LogMessage(lastMessage);
+        }
+    }
+
+    function retrieveIsEven() public view returns (string memory) {
+        return lastMessage;
+    }
 }
