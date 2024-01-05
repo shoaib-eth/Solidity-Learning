@@ -88,4 +88,13 @@ contract ResultCalculator {
             return "Fail";
         }
     }
+
+    function calculateResult(
+        uint256 totalMarks,
+        uint256 obtainedMarks
+    ) public pure returns (string memory) {
+        uint256 percentage = calculatePercentage(totalMarks, obtainedMarks);
+        string memory division = calculateDivision(percentage);
+        return division;
+    }
 }
