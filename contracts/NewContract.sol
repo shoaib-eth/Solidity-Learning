@@ -11,4 +11,8 @@ contract NewContract {
     function getData() public view returns (string memory) {
         return data;
     }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
 }
