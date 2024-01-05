@@ -37,4 +37,8 @@ contract TransactionDetails {
     function getContractBalance() public view returns (uint256) {
         return transactionContract.getBalance();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a36a43071ff3de4fd16c886a48cf70e98db1ce4a

@@ -88,6 +88,7 @@ contract ResultCalculator {
             return "Fail";
         }
     }
+<<<<<<< HEAD
 
     function calculateResult(
         uint256 totalMarks,
@@ -97,4 +98,6 @@ contract ResultCalculator {
         string memory division = calculateDivision(percentage);
         return division;
     }
+=======
+>>>>>>> a36a43071ff3de4fd16c886a48cf70e98db1ce4a
 }
