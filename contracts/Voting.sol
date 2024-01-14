@@ -40,12 +40,13 @@ contract Voting {
         return votes;
     }
 
-    function getVotesReceivedFor(bytes32 candidate) public view returns (uint8) {
+    function getVotesReceivedFor(
+        bytes32 candidate
+    ) public view returns (uint8) {
         return votesReceived[candidate];
     }
 
     function getCandidateListLength() public view returns (uint) {
         return candidateList.length;
     }
-
 }
