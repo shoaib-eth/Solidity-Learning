@@ -31,4 +31,17 @@ contract Voting {
     function getCandidateList() public view returns (bytes32[] memory) {
         return candidateList;
     }
+
+    function getVotesReceived() public view returns (uint8[] memory) {
+        uint8[] memory votes = new uint8[](candidateList.length);
+        for (uint i = 0; i < candidateList.length; i++) {
+            votes[i] = votesReceived[candidateList[i]];
+        }
+        return votes;
+    }
+
+    function getVotesReceivedFor(bytes32 candidate) public view returns (uint8) {
+        return votesReceived[candidate];
+    }
+    
 }
