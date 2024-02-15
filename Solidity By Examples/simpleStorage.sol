@@ -9,6 +9,6 @@ contract simpleStorage {
     }
 
     function getNum() public view returns (uint) {
-        return myNumber + 2;
+        return myNumber + 1;
     }
 }
