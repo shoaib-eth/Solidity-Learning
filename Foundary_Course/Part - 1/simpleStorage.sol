@@ -10,10 +10,10 @@ contract simpleStorage {
         uint age;
     }
 
-    // Array of Person struct type 
+    // Array of Person struct type
     Person[] public listOfPeoples;
 
-    // Mapping of name to age 
+    // Mapping of name to age
     mapping(string => uint) public nameToAge;
 
     // Store a number
@@ -26,7 +26,7 @@ contract simpleStorage {
         return myNumber;
     }
 
-    // Add a person to the list of people and store their name and age in the mapping 
+    // Add a person to the list of people and store their name and age in the mapping
     function addPerson(string memory _name, uint _age) public {
         listOfPeoples.push(Person(_name, _age));
         nameToAge[_name] = _age;
