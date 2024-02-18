@@ -9,4 +9,8 @@ contract FundMe {
 
         require(msg.value >= 0.01 ether, "Minimum contribution is 0.01 ether");
     }
+
+    function withdraw() public {
+        payable(msg.sender).transfer(address(this).balance);
+    }
 }
