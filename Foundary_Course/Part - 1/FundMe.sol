@@ -6,5 +6,7 @@ contract FundMe {
 
     function fund() public payable {
         myValue = myValue + 1;
+
+        require(msg.value >= 0.01 ether, "Minimum contribution is 0.01 ether");
     }
 }
