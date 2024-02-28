@@ -14,4 +14,12 @@ contract FundMe {
             addressToAmountFunded[msg.sender] +
             msg.value;
     }
+
+    function getVersion() public view returns (uint256) {
+        return 1;
+    }
+
+    function getFunders() public view returns (address[] memory) {
+        return funders;
+    }
 }
