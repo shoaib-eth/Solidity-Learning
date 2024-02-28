@@ -22,4 +22,16 @@ contract FundMe {
     function getFunders() public view returns (address[] memory) {
         return funders;
     }
+
+    function getFunderAmount(address funder) public view returns (uint256) {
+        return addressToAmountFunded[funder];
+    }
+
+    function getFunderCount() public view returns (uint256) {
+        return funders.length;
+    }
+
+    function getMinimumUSD() public view returns (uint256) {
+        return minimumUSD;
+    }
 }
