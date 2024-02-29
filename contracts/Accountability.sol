@@ -18,4 +18,12 @@ contract Accountability {
         require(msg.sender == owner, "You are not the owner");
         owner = newOwner;
     }
+
+    function isOwner() public view returns (bool) {
+        return msg.sender == owner;
+    }
+
+    function timeSinceLastActive() public view returns (uint) {
+        return block.timestamp - lastActive;
+    }
 }
