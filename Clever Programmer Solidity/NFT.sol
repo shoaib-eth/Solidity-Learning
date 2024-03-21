@@ -32,4 +32,25 @@ contract NFT is ERC721 {
     function _baseURI() internal pure override returns (string memory) {
         return "https://nft-api-123.herokuapp.com/api/token/";
     }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        return string(abi.encodePacked(_baseURI(), _tokenURIs[tokenId]));
+    }
+
+    function getOwnerNFTs(address owner)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory result = new uint256[](balanceOf(owner));
+        for (uint256 i = 0; i < balanceOf(owner); i++) {
+            result[i] = tokenOfOwnerByIndex(owner, i);
+        }
+        return result;
+    }
 }
