@@ -32,4 +32,20 @@ contract GoalContract {
         paidOut = true;
         payable(owner).transfer(address(this).balance);
     }
+
+    function getDetails()
+        public
+        view
+        returns (address, string memory, uint, uint, uint, bool, bool)
+    {
+        return (
+            owner,
+            goal,
+            deadline,
+            completionDate,
+            address(this).balance,
+            completed,
+            paidOut
+        );
+    }
 }
