@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.8.4;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.24;
 
 contract GoalContract {
     address public owner;
