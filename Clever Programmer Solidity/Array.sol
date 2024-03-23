@@ -80,3 +80,23 @@ contract NestedArray {
         array2D.pop();
     }
 }
+
+contract DynamicArray {
+    uint[] public dynamicArray;
+
+    function getDynamicArray() public view returns (uint[] memory) {
+        return dynamicArray;
+    }
+
+    function getDynamicArrayLength() public view returns (uint) {
+        return dynamicArray.length;
+    }
+
+    function pushDynamicArray(uint _number) public {
+        dynamicArray.push(_number);
+    }
+
+    function popDynamicArray() public {
+        dynamicArray.pop();
+    }
+}
