@@ -120,3 +120,30 @@ contract DynamicArray2 {
         dynamicArray2.pop();
     }
 }
+
+contract DynamicArray3 {
+    uint[][] public dynamicArray3;
+
+    function getDynamicArray3() public view returns (uint[][] memory) {
+        return dynamicArray3;
+    }
+
+    function getDynamicArray3Length() public view returns (uint) {
+        return dynamicArray3.length;
+    }
+
+    function pushDynamicArray3(uint[] memory _array) public {
+        dynamicArray3.push(_array);
+    }
+
+    function popDynamicArray3() public {
+        dynamicArray3.pop();
+    }
+
+    function getDynamicArray3Item(
+        uint _index1,
+        uint _index2
+    ) public view returns (uint) {
+        return dynamicArray3[_index1][_index2];
+    }
+}
