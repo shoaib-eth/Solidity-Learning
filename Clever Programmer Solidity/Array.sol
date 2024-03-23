@@ -53,3 +53,30 @@ contract AnotherArray {
         return names.length;
     }
 }
+
+contract NestedArray {
+    uint[][] public array2D = [[1, 2], [3, 4], [5, 6]];
+
+    function getArray2D() public view returns (uint[][] memory) {
+        return array2D;
+    }
+
+    function getArray2DLength() public view returns (uint) {
+        return array2D.length;
+    }
+
+    function getArray2DItem(
+        uint _index1,
+        uint _index2
+    ) public view returns (uint) {
+        return array2D[_index1][_index2];
+    }
+
+    function pushArray2D(uint[] memory _array) public {
+        array2D.push(_array);
+    }
+
+    function popArray2D() public {
+        array2D.pop();
+    }
+}
