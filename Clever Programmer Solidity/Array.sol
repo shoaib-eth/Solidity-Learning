@@ -100,3 +100,23 @@ contract DynamicArray {
         dynamicArray.pop();
     }
 }
+
+contract DynamicArray2 {
+    uint[][] public dynamicArray2;
+
+    function getDynamicArray2() public view returns (uint[][] memory) {
+        return dynamicArray2;
+    }
+
+    function getDynamicArray2Length() public view returns (uint) {
+        return dynamicArray2.length;
+    }
+
+    function pushDynamicArray2(uint[] memory _array) public {
+        dynamicArray2.push(_array);
+    }
+
+    function popDynamicArray2() public {
+        dynamicArray2.pop();
+    }
+}
