@@ -4,11 +4,11 @@ pragma solidity 0.8.24;
 contract Array {
     uint[] public numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    function getNumber(uint _index) public view returns(uint) {
+    function getNumber(uint _index) public view returns (uint) {
         return numbers[_index];
     }
 
-    function getNumbers() public view returns(uint[] memory) {
+    function getNumbers() public view returns (uint[] memory) {
         return numbers;
     }
 
@@ -20,7 +20,7 @@ contract Array {
         numbers.pop();
     }
 
-    function getLength() public view returns(uint) {
+    function getLength() public view returns (uint) {
         return numbers.length;
     }
 }
