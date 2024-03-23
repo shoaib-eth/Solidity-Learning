@@ -24,3 +24,32 @@ contract Array {
         return numbers.length;
     }
 }
+
+contract AnotherArray {
+    string[] public names;
+
+    function addName(string memory _name) public {
+        names.push(_name);
+    }
+
+    function getName(uint _index) public view returns (string memory) {
+        require(_index < names.length, "Invalid index");
+        return names[_index];
+    }
+
+    function getNames() public view returns (string[] memory) {
+        return names;
+    }
+
+    function removeName(uint _index) public {
+        require(_index < names.length, "Invalid index");
+        for (uint i = _index; i < names.length - 1; i++) {
+            names[i] = names[i + 1];
+        }
+        names.pop();
+    }
+
+    function getLength() public view returns (uint) {
+        return names.length;
+    }
+}
