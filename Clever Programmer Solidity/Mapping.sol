@@ -63,3 +63,15 @@ contract NestedMapping {
         return nestedMapping[_id1][_id2];
     }
 }
+
+contract NestedMapping2 {
+    mapping(uint => mapping(uint => mapping(uint => bool))) public nestedMapping;
+
+    function updateNestedMapping(uint _id1, uint _id2, uint _id3, bool _value) public {
+        nestedMapping[_id1][_id2][_id3] = _value;
+    }
+
+    function getNestedMapping(uint _id1, uint _id2, uint _id3) public view returns (bool) {
+        return nestedMapping[_id1][_id2][_id3];
+    }
+}
