@@ -51,3 +51,15 @@ contract Student {
         return students[_id];
     }
 }
+
+contract NestedMapping {
+    mapping(uint => mapping(uint => bool)) public nestedMapping;
+
+    function updateNestedMapping(uint _id1, uint _id2, bool _value) public {
+        nestedMapping[_id1][_id2] = _value;
+    }
+
+    function getNestedMapping(uint _id1, uint _id2) public view returns (bool) {
+        return nestedMapping[_id1][_id2];
+    }
+}
