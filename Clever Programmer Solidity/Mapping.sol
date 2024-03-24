@@ -33,3 +33,21 @@ contract Mapping {
         return (book.title, book.author);
     }
 }
+
+contract Student {
+    mapping(uint => string) public students;
+
+    constructor() {
+        students[1] = "Alice";
+        students[2] = "Bob";
+        students[3] = "Charlie";
+    }
+
+    function addStudent(uint _id, string memory _name) public {
+        students[_id] = _name;
+    }
+
+    function getStudent(uint _id) public view returns (string memory) {
+        return students[_id];
+    }
+}
