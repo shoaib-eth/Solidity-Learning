@@ -1,6 +1,8 @@
-// SPDX-License-Identifier: MIT
-pragma solidity 0.8.24;
+SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
+// This contract defines a mapping of uint to string and a mapping of uint to Book struct.
+// It also includes functions to add names and books, and retrieve book details.
 contract Mapping {
     mapping(uint => string) public names;
     mapping(uint => Book) public books;
@@ -34,6 +36,8 @@ contract Mapping {
     }
 }
 
+// This contract defines a mapping of uint to string for students.
+// It includes functions to add students and retrieve student names.
 contract Student {
     mapping(uint => string) public students;
 
@@ -52,6 +56,8 @@ contract Student {
     }
 }
 
+// This contract defines a nested mapping of uint to uint to bool.
+// It includes functions to update and retrieve values from the nested mapping.
 contract NestedMapping {
     mapping(uint => mapping(uint => bool)) public nestedMapping;
 
@@ -64,6 +70,8 @@ contract NestedMapping {
     }
 }
 
+// This contract defines a nested mapping of uint to uint to uint to bool.
+// It includes functions to update and retrieve values from the nested mapping.
 contract NestedMapping2 {
     mapping(uint => mapping(uint => mapping(uint => bool))) public nestedMapping;
 
@@ -76,6 +84,8 @@ contract NestedMapping2 {
     }
 }
 
+// This contract defines a nested mapping of uint to uint to uint to uint to bool.
+// It includes functions to update and retrieve values from the nested mapping.
 contract NestedMapping3 {
     mapping(uint => mapping(uint => mapping(uint => mapping(uint => bool)))) public nestedMapping;
 
@@ -88,6 +98,8 @@ contract NestedMapping3 {
     }
 }
 
+// This contract defines a nested mapping of uint to uint to uint to uint to uint to bool.
+// It includes functions to update and retrieve values from the nested mapping.
 contract NestedMapping4 {
     mapping(uint => mapping(uint => mapping(uint => mapping(uint => mapping(uint => bool)))) public nestedMapping;
 
