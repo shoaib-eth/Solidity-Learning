@@ -8,3 +8,11 @@ contract Events {
         emit NewMessage(message);
     }
 }
+
+contract AnotherContract {
+    event NewNumber(uint256 number);
+
+    function sendNumber(uint256 number) public {
+        emit NewNumber(number);
+    }
+}
