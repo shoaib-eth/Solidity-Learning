@@ -46,4 +46,8 @@ contract goalApp {
         payable(msg.sender).transfer(goals[_goalId].current);
         goals[_goalId].current = 0;
     }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
 }
