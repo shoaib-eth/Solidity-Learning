@@ -50,4 +50,8 @@ contract goalApp {
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
+
+    function getGoalBalance(uint256 _goalId) public view returns (uint256) {
+        return goals[_goalId].current;
+    }
 }
