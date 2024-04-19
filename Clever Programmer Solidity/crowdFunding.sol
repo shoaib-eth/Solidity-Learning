@@ -8,31 +8,34 @@ contract crowdFunding {
     mapping(address => uint) public contributions;
     uint public totalContributors;
     uint public totalContributions;
-    
+
     constructor(uint _goal, uint _timeLimit) {
         owner = msg.sender;
         goal = _goal;
         endTime = block.timestamp + _timeLimit;
     }
-    
+
     function contribute() public payable {
         require(block.timestamp < endTime, "The campaign has ended");
         contributions[msg.sender] += msg.value;
         totalContributors++;
         totalContributions += msg.value;
     }
-    
+
     function withdraw() public {
         require(block.timestamp > endTime, "The campaign is still ongoing");
-        require(totalContributions >= goal, "The campaign did not reach its goal");
+        require(
+            totalContributions >= goal,
+            "The campaign did not reach its goal"
+        );
         require(msg.sender == owner, "You are not the owner");
         payable(owner).transfer(address(this).balance);
     }
-    
-    function getBalance() public view returns(uint) {
+
+    function getBalance() public view returns (uint) {
         return address(this).balance;
     }
-    
+
     function getRefund() public {
         require(block.timestamp > endTime, "The campaign is still ongoing");
         require(totalContributions < goal, "The campaign reached its goal");
