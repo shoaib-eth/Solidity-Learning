@@ -11,6 +11,10 @@ contract Birthday {
     }
 
     function sayHappyBirthday() public view returns (string memory) {
-        if (BirthMonth == 4 && BirthDate == 27) return "Happy birthday to you!";
+        if (BirthMonth == 4 && BirthDate == 27) {
+            return "Happy birthday to you!";
+        } else {
+            return "It's not your birthday.";
+        }
     }
 }
