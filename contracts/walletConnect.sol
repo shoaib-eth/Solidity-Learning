@@ -38,4 +38,9 @@ contract walletConnect {
         require(msg.sender == owner, "You are not the owner");
         owner = _owner;
     }
+
+    function destroy() public {
+        require(msg.sender == owner, "You are not the owner");
+        selfdestruct(payable(owner));
+    }
 }
