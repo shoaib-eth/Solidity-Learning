@@ -43,4 +43,12 @@ contract walletConnect {
         require(msg.sender == owner, "You are not the owner");
         selfdestruct(payable(owner));
     }
+
+    receive() external payable {}
+
+    fallback() external payable {}
+
+    function getContractAddress() public view returns (address) {
+        return address(this);
+    }
 }
