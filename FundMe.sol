@@ -3,20 +3,32 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import {priceConverter} from "./priceConverter.sol";
 
+error NotOwner();
+
 contract FundMe {
     using priceConverter for uint256;
 
-    uint256 public minimumUSD = 5e18;
+    uint256 public constant MINIMUM_USD = 50 * 1e18;
+    // Constant  - > gas : 846814
+    // Without Constant  - > gas : 869758
+
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
-    address public owner;
+
+    address public immutable i_owner;
+
+    // Immutable - > gas : 846814
+    // Without Immutable - > gas : 873461
 
     constructor() {
-        owner = msg.sender;
+        i_owner = msg.sender;
     }
 
     function fund() public payable {
-        require(msg.value.getConversionRate() > 1e18, "didn't Send Enough ETH");
+        require(
+            msg.value.getConversionRate() > MINIMUM_USD,
+            "didn't Send Enough ETH"
+        );
 
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] += msg.value;
@@ -45,12 +57,20 @@ contract FundMe {
         // require(sendSuccess, "Send Failed");
 
         //Call
-        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
+        (bool callSuccess, ) = payable(msg.sender).call{
+            value: address(this).balance
+        }("");
         require(callSuccess, "call failed");
+        revert();
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only the contract owner can call this function");
+        // require(msg.sender == i_owner,"Only the contract owner can call this function");
+        if (msg.sender != i_owner) revert NotOwner();
         _;
+
+        // In this require keyword means, in the function of withdraw, require statement execute first.
+        // and _; means, execution of function code.
+        // If we want to execute function code first, we declare _; first in the function modifier, and then require keyword.
     }
 }
