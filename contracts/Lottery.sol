@@ -15,16 +15,7 @@ contract Lottery {
     }
 
     function random() private view returns (uint256) {
-        return
-            uint256(
-                keccak256(
-                    abi.encodePacked(
-                        block.difficulty,
-                        block.timestamp,
-                        players.length
-                    )
-                )
-            );
+        return uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
     }
 
     function pickWinner() public restricted {

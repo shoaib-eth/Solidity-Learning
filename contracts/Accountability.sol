@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 contract Accountability {
     address public owner;
-    uint public lastActive;
+    uint256 public lastActive;
 
     constructor() {
         owner = msg.sender;
@@ -23,7 +23,7 @@ contract Accountability {
         return msg.sender == owner;
     }
 
-    function timeSinceLastActive() public view returns (uint) {
+    function timeSinceLastActive() public view returns (uint256) {
         return block.timestamp - lastActive;
     }
 }
