@@ -16,4 +16,8 @@ contract ethPrice {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         return answer;
     }
+
+    function getDecimals() public view returns (uint8) {
+        return priceFeed.decimals();
+    }
 }
