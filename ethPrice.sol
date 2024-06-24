@@ -20,4 +20,18 @@ contract ethPrice {
     function getDecimals() public view returns (uint8) {
         return priceFeed.decimals();
     }
+
+    function getRoundData(uint80 _roundId)
+        public
+        view
+        returns (
+            uint80 roundId,
+            int256 answer,
+            uint256 startedAt,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        )
+    {
+        return priceFeed.getRoundData(_roundId);
+    }
 }
