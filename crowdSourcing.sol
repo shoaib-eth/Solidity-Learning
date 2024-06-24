@@ -7,17 +7,20 @@ contract crowdSourcing {
     AggregatorV3Interface internal priceFeed;
 
     constructor() {
+        // Initialize the priceFeed contract with the specified address
         priceFeed = AggregatorV3Interface(
             0x694AA1769357215DE4FAC081bf1f309aDC325306
         );
     }
 
     function getLatestPrice() public view returns (int256) {
+        // Retrieve the latest round data from the priceFeed contract
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         return answer;
     }
 
     function getDecimals() public view returns (uint8) {
+        // Retrieve the number of decimals used by the priceFeed contract
         return priceFeed.decimals();
     }
 
@@ -32,6 +35,7 @@ contract crowdSourcing {
             uint80 answeredInRound
         )
     {
+        // Retrieve the round data for the specified roundId from the priceFeed contract
         return priceFeed.getRoundData(_roundId);
     }
 }
