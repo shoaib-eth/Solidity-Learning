@@ -26,4 +26,8 @@ contract TaskManagement {
         tasks[_id] = _task;
         emit TaskCompleted(_id, _task.completed);
     }
+
+    function getTask(uint _id) public view returns (Task memory) {
+        return tasks[_id];
+    }
 }
