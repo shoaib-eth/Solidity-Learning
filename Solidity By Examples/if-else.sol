@@ -26,4 +26,8 @@ contract IfElse {
     function ternary2(uint _x) public pure returns (uint) {
         return _x < 10 ? 1 : _x < 20 ? 2 : 3;
     }
+
+    function ternary3(uint _x) public pure returns (uint) {
+        return _x < 10 ? 1 : _x < 20 ? 2 : _x < 30 ? 3 : 4;
+    }
 }
