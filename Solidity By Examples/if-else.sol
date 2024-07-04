@@ -22,4 +22,8 @@ contract IfElse {
         // the "?" operator is called the ternary operator
         return _x < 10 ? 1 : 2;
     }
+
+    function ternary2(uint _x) public pure returns (uint) {
+        return _x < 10 ? 1 : _x < 20 ? 2 : 3;
+    }
 }
