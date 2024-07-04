@@ -19,4 +19,14 @@ contract Counter {
         // This function will fail if count = 0
         count -= 1;
     }
+
+    // Function to reset count to 0
+    function reset() public {
+        count = 0;
+    }
+
+    // Function to increment count by a given value
+    function add(uint value) public {
+        count += value;
+    }
 }
