@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.24;
+pragma solidity ^0.8.19;
 
-contract goalApp {
+contract GoalApp {
     struct Goal {
         string name;
         uint256 target;
