@@ -10,7 +10,12 @@ contract Accountability {
         lastActive = block.timestamp;
     }
 
-    function ping() public {
+    modifier onlyOwner() {
+        require(msg.sender == owner, "You are not the owner");
+        _;
+    }
+
+    function ping() public onlyOwner {
         lastActive = block.timestamp;
     }
 
