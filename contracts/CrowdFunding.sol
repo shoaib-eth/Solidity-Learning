@@ -7,7 +7,7 @@ contract CrowdFunding {
         uint256 amount;
     }
 
-    address public owner;
+    address payable public owner;
     uint256 public numInvestors;
     uint256 public deadline;
     string public status;
@@ -22,7 +22,7 @@ contract CrowdFunding {
     }
 
     constructor(uint256 _duration, uint256 _goalAmount) {
-        owner = msg.sender;
+        owner = payable(msg.sender);
         deadline = block.timestamp + _duration;
         goalAmount = _goalAmount;
         status = "Funding";
@@ -61,6 +61,6 @@ contract CrowdFunding {
     }
 
     function kill() public onlyOwner {
-        selfdestruct(payable(owner));
+        payable(owner).transfer(address(this).balance);
     }
 }
