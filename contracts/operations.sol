@@ -25,4 +25,8 @@ contract Operations {
     function divide() public view returns (uint256) {
         return a / b;
     }
+
+    function modulo() public view returns (uint256) {
+        return a % b;
+    }
 }
