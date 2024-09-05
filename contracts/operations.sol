@@ -29,4 +29,8 @@ contract Operations {
     function modulo() public view returns (uint256) {
         return a % b;
     }
+
+    function power() public view returns (uint256) {
+        return a ** b;
+    }
 }
