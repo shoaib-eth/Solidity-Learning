@@ -41,4 +41,48 @@ contract Operations {
     function decrement() public {
         a--;
     }
+
+    function negate() public {
+        a = -a;
+    }
+
+    function factorial() public view returns (uint256) {
+        uint256 result = 1;
+        for (uint256 i = 1; i <= a; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    function isPrime() public view returns (bool) {
+        if (a <= 1) {
+            return false;
+        }
+        for (uint256 i = 2; i * i <= a; i++) {
+            if (a % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function isEven() public view returns (bool) {
+        return a % 2 == 0;
+    }
+
+    function isOdd() public view returns (bool) {
+        return a % 2 != 0;
+    }
+
+    function isPerfectSquare() public view returns (bool) {
+        uint256 sqrt = uint256(0);
+        uint256 x = a;
+        uint256 y = (x + 1) / 2;
+        while (y < x) {
+            x = y;
+            y = (x + a / x) / 2;
+        }
+        sqrt = x;
+        return sqrt * sqrt == a;
+    }
 }
