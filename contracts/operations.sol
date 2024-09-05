@@ -37,4 +37,8 @@ contract Operations {
     function increment() public {
         a++;
     }
+
+    function decrement() public {
+        a--;
+    }
 }
