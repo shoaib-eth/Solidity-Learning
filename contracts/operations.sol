@@ -33,4 +33,8 @@ contract Operations {
     function power() public view returns (uint256) {
         return a ** b;
     }
+
+    function increment() public {
+        a++;
+    }
 }
