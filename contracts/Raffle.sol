@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -45,13 +45,25 @@ contract Raffle is Ownable, ReentrancyGuard {
         uint256 raffleEnd
     );
 
-    event RaffleEnded(uint256 raffleId, uint256 raffleWinnerId, address raffleWinner);
+    event RaffleEnded(
+        uint256 raffleId,
+        uint256 raffleWinnerId,
+        address raffleWinner
+    );
 
     event RaffleCancelled(uint256 raffleId);
 
-    event TicketPurchased(uint256 ticketId, uint256 raffleId, address ticketOwner);
+    event TicketPurchased(
+        uint256 ticketId,
+        uint256 raffleId,
+        address ticketOwner
+    );
 
-    event TicketRefunded(uint256 ticketId, uint256 raffleId, address ticketOwner);
+    event TicketRefunded(
+        uint256 ticketId,
+        uint256 raffleId,
+        address ticketOwner
+    );
 
     function createRaffle(
         uint256 _ticketPrice,
@@ -59,10 +71,22 @@ contract Raffle is Ownable, ReentrancyGuard {
         uint256 _raffleStart,
         uint256 _raffleEnd
     ) external onlyOwner {
-        require(_ticketPrice > 0, "Raffle: ticket price must be greater than 0");
-        require(_ticketAmount > 0, "Raffle: ticket amount must be greater than 0");
-        require(_raffleStart > block.timestamp, "Raffle: raffle start must be in the future");
-        require(_raffleEnd > _raffleStart, "Raffle: raffle end must be after raffle start");
+        require(
+            _ticketPrice > 0,
+            "Raffle: ticket price must be greater than 0"
+        );
+        require(
+            _ticketAmount > 0,
+            "Raffle: ticket amount must be greater than 0"
+        );
+        require(
+            _raffleStart > block.timestamp,
+            "Raffle: raffle start must be in the future"
+        );
+        require(
+            _raffleEnd > _raffleStart,
+            "Raffle: raffle end must be after raffle start"
+        );
 
         _raffleIds.increment();
         uint256 raffleId = _raffleIds.current();
@@ -82,18 +106,38 @@ contract Raffle is Ownable, ReentrancyGuard {
             raffleCancelled: false
         });
 
-        emit RaffleCreated(raffleId, _ticketPrice, _ticketAmount, _raffleStart, _raffleEnd);
+        emit RaffleCreated(
+            raffleId,
+            _ticketPrice,
+            _ticketAmount,
+            _raffleStart,
+            _raffleEnd
+        );
     }
 
     function endRaffle(uint256 _raffleId) external onlyOwner {
-        require(raffles[_raffleId].raffleId == _raffleId, "Raffle: raffle does not exist");
-        require(raffles[_raffleId].raffleEnded == false, "Raffle: raffle already ended");
-        require(raffles[_raffleId].raffleCancelled == false, "Raffle: raffle already cancelled");
-        require(block.timestamp >= raffles[_raffleId].raffleEnd, "Raffle: raffle has not ended yet");
+        require(
+            raffles[_raffleId].raffleId == _raffleId,
+            "Raffle: raffle does not exist"
+        );
+        require(
+            raffles[_raffleId].raffleEnded == false,
+            "Raffle: raffle already ended"
+        );
+        require(
+            raffles[_raffleId].raffleCancelled == false,
+            "Raffle: raffle already cancelled"
+        );
+        require(
+            block.timestamp >= raffles[_raffleId].raffleEnd,
+            "Raffle: raffle has not ended yet"
+        );
 
         raffles[_raffleId].raffleEnded = true;
 
-        uint256 raffleWinnerId = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % raffles[_raffleId].ticketSold + 1;
+        uint256 raffleWinnerId = (uint256(
+            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
+        ) % raffles[_raffleId].ticketSold) + 1;
         address raffleWinner = tickets[raffleWinnerId].ticketOwner;
 
         raffles[_raffleId].raffleWinner = raffleWinner;
@@ -103,9 +147,18 @@ contract Raffle is Ownable, ReentrancyGuard {
     }
 
     function cancelRaffle(uint256 _raffleId) external onlyOwner {
-        require(raffles[_raffleId].raffleId == _raffleId, "Raffle: raffle does not exist");
-        require(raffles[_raffleId].raffleEnded == false, "Raffle: raffle already ended");
-        require(raffles[_raffleId].raffleCancelled == false, "Raffle: raffle already cancelled");
+        require(
+            raffles[_raffleId].raffleId == _raffleId,
+            "Raffle: raffle does not exist"
+        );
+        require(
+            raffles[_raffleId].raffleEnded == false,
+            "Raffle: raffle already ended"
+        );
+        require(
+            raffles[_raffleId].raffleCancelled == false,
+            "Raffle: raffle already cancelled"
+        );
 
         raffles[_raffleId].raffleCancelled = true;
 
@@ -113,12 +166,30 @@ contract Raffle is Ownable, ReentrancyGuard {
     }
 
     function purchaseTicket(uint256 _raffleId) external payable nonReentrant {
-        require(raffles[_raffleId].raffleId == _raffleId, "Raffle: raffle does not exist");
-        require(raffles[_raffleId].raffleEnded == false, "Raffle: raffle already ended");
-        require(raffles[_raffleId].raffleCancelled == false, "Raffle: raffle already cancelled");
-        require(block.timestamp >= raffles[_raffleId].raffleStart, "Raffle: raffle has not started yet");
-        require(block.timestamp < raffles[_raffleId].raffleEnd, "Raffle: raffle has ended");
-        require(msg.value == raffles[_raffleId].ticketPrice, "Raffle: incorrect ticket price");
+        require(
+            raffles[_raffleId].raffleId == _raffleId,
+            "Raffle: raffle does not exist"
+        );
+        require(
+            raffles[_raffleId].raffleEnded == false,
+            "Raffle: raffle already ended"
+        );
+        require(
+            raffles[_raffleId].raffleCancelled == false,
+            "Raffle: raffle already cancelled"
+        );
+        require(
+            block.timestamp >= raffles[_raffleId].raffleStart,
+            "Raffle: raffle has not started yet"
+        );
+        require(
+            block.timestamp < raffles[_raffleId].raffleEnd,
+            "Raffle: raffle has ended"
+        );
+        require(
+            msg.value == raffles[_raffleId].ticketPrice,
+            "Raffle: incorrect ticket price"
+        );
 
         _ticketIds.increment();
         uint256 ticketId = _ticketIds.current();
@@ -135,12 +206,26 @@ contract Raffle is Ownable, ReentrancyGuard {
     }
 
     function refundTicket(uint256 _ticketId) external nonReentrant {
-        require(tickets[_ticketId].ticketId == _ticketId, "Raffle: ticket does not exist");
-        require(raffles[tickets[_ticketId].raffleId].raffleEnded == true, "Raffle: raffle has not ended yet");
-        require(raffles[tickets[_ticketId].raffleId].raffleCancelled == false, "Raffle: raffle has been cancelled");
-        require(tickets[_ticketId].ticketOwner == msg.sender, "Raffle: ticket does not belong to sender");
+        require(
+            tickets[_ticketId].ticketId == _ticketId,
+            "Raffle: ticket does not exist"
+        );
+        require(
+            raffles[tickets[_ticketId].raffleId].raffleEnded == true,
+            "Raffle: raffle has not ended yet"
+        );
+        require(
+            raffles[tickets[_ticketId].raffleId].raffleCancelled == false,
+            "Raffle: raffle has been cancelled"
+        );
+        require(
+            tickets[_ticketId].ticketOwner == msg.sender,
+            "Raffle: ticket does not belong to sender"
+        );
 
-        raffles[tickets[_ticketId].raffleId].ticketRefund = raffles[tickets[_ticketId].raffleId].ticketRefund.add(1);
+        raffles[tickets[_ticketId].raffleId].ticketRefund = raffles[
+            tickets[_ticketId].raffleId
+        ].ticketRefund.add(1);
 
         tickets[_ticketId].ticketOwner = address(0);
 
@@ -148,30 +233,56 @@ contract Raffle is Ownable, ReentrancyGuard {
     }
 
     function withdrawRefund(uint256 _raffleId) external onlyOwner {
-        require(raffles[_raffleId].raffleId == _raffleId, "Raffle: raffle does not exist");
-        require(raffles[_raffleId].raffleEnded == true, "Raffle: raffle has not ended yet");
-        require(raffles[_raffleId].raffleCancelled == false, "Raffle: raffle has been cancelled");
+        require(
+            raffles[_raffleId].raffleId == _raffleId,
+            "Raffle: raffle does not exist"
+        );
+        require(
+            raffles[_raffleId].raffleEnded == true,
+            "Raffle: raffle has not ended yet"
+        );
+        require(
+            raffles[_raffleId].raffleCancelled == false,
+            "Raffle: raffle has been cancelled"
+        );
 
-        raffles[_raffleId].ticketRefundAmount = raffles[_raffleId].ticketRefund.mul(raffles[_raffleId].ticketPrice);
+        raffles[_raffleId].ticketRefundAmount = raffles[_raffleId]
+            .ticketRefund
+            .mul(raffles[_raffleId].ticketPrice);
 
         payable(owner()).transfer(raffles[_raffleId].ticketRefundAmount);
     }
 
     function withdrawFunds(uint256 _raffleId) external onlyOwner {
-        require(raffles[_raffleId].raffleId == _raffleId, "Raffle: raffle does not exist");
-        require(raffles[_raffleId].raffleEnded == true, "Raffle: raffle has not ended yet");
-        require(raffles[_raffleId].raffleCancelled == false, "Raffle: raffle has been cancelled");
+        require(
+            raffles[_raffleId].raffleId == _raffleId,
+            "Raffle: raffle does not exist"
+        );
+        require(
+            raffles[_raffleId].raffleEnded == true,
+            "Raffle: raffle has not ended yet"
+        );
+        require(
+            raffles[_raffleId].raffleCancelled == false,
+            "Raffle: raffle has been cancelled"
+        );
 
-        uint256 raffleFunds = raffles[_raffleId].ticketSold.mul(raffles[_raffleId].ticketPrice);
+        uint256 raffleFunds = raffles[_raffleId].ticketSold.mul(
+            raffles[_raffleId].ticketPrice
+        );
 
         payable(owner()).transfer(raffleFunds);
     }
 
-    function getRaffleInfo(uint256 _raffleId) external view returns (RaffleInfo memory) {
+    function getRaffleInfo(
+        uint256 _raffleId
+    ) external view returns (RaffleInfo memory) {
         return raffles[_raffleId];
     }
 
-    function getTicketInfo(uint256 _ticketId) external view returns (TicketInfo memory) {
+    function getTicketInfo(
+        uint256 _ticketId
+    ) external view returns (TicketInfo memory) {
         return tickets[_ticketId];
     }
 
@@ -183,11 +294,15 @@ contract Raffle is Ownable, ReentrancyGuard {
         return _ticketIds.current();
     }
 
-    function getRaffleWinner(uint256 _raffleId) external view returns (address) {
+    function getRaffleWinner(
+        uint256 _raffleId
+    ) external view returns (address) {
         return raffles[_raffleId].raffleWinner;
     }
 
-    function getRaffleWinnerId(uint256 _raffleId) external view returns (uint256) {
+    function getRaffleWinnerId(
+        uint256 _raffleId
+    ) external view returns (uint256) {
         return raffles[_raffleId].raffleWinnerId;
     }
 
@@ -195,7 +310,9 @@ contract Raffle is Ownable, ReentrancyGuard {
         return tickets[_ticketId].ticketOwner;
     }
 
-    function getTicketRaffle(uint256 _ticketId) external view returns (uint256) {
+    function getTicketRaffle(
+        uint256 _ticketId
+    ) external view returns (uint256) {
         return tickets[_ticketId].raffleId;
     }
 
@@ -203,7 +320,9 @@ contract Raffle is Ownable, ReentrancyGuard {
         return raffles[_raffleId].ticketPrice;
     }
 
-    function getTicketAmount(uint256 _raffleId) external view returns (uint256) {
+    function getTicketAmount(
+        uint256 _raffleId
+    ) external view returns (uint256) {
         return raffles[_raffleId].ticketAmount;
     }
 
@@ -211,11 +330,15 @@ contract Raffle is Ownable, ReentrancyGuard {
         return raffles[_raffleId].ticketSold;
     }
 
-    function getTicketRefund(uint256 _raffleId) external view returns (uint256) {
+    function getTicketRefund(
+        uint256 _raffleId
+    ) external view returns (uint256) {
         return raffles[_raffleId].ticketRefund;
     }
 
-    function getTicketRefundAmount(uint256 _raffleId) external view returns (uint256) {
+    function getTicketRefundAmount(
+        uint256 _raffleId
+    ) external view returns (uint256) {
         return raffles[_raffleId].ticketRefundAmount;
     }
 
@@ -231,7 +354,9 @@ contract Raffle is Ownable, ReentrancyGuard {
         return raffles[_raffleId].raffleEnded;
     }
 
-    function getRaffleCancelled(uint256 _raffleId) external view returns (bool) {
+    function getRaffleCancelled(
+        uint256 _raffleId
+    ) external view returns (bool) {
         return raffles[_raffleId].raffleCancelled;
     }
 
