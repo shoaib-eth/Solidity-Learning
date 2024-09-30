@@ -5,7 +5,10 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MoodNFT is ERC721, Ownable {
-    enum Mood { Happy, Sad }
+    enum Mood {
+        Happy,
+        Sad
+    }
     mapping(uint256 => Mood) private _tokenMoods;
 
     constructor() ERC721("MoodNFT", "MOOD") {}
@@ -21,7 +24,10 @@ contract MoodNFT is ERC721, Ownable {
     }
 
     function setMood(uint256 tokenId, Mood mood) public {
-        require(ownerOf(tokenId) == msg.sender, "Only the owner can set the mood");
+        require(
+            ownerOf(tokenId) == msg.sender,
+            "Only the owner can set the mood"
+        );
         _tokenMoods[tokenId] = mood;
     }
 }
