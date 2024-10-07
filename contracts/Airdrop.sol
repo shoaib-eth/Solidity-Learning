@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -19,7 +19,10 @@ contract Airdrop {
         owner = msg.sender;
     }
 
-    function airdrop(address[] calldata recipients, uint256 amount) external onlyOwner {
+    function airdrop(
+        address[] calldata recipients,
+        uint256 amount
+    ) external onlyOwner {
         for (uint256 i = 0; i < recipients.length; i++) {
             balances[recipients[i]] += amount;
             emit Airdropped(recipients[i], amount);
