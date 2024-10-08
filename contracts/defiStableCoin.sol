@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DefiStableCoin is Ownable {
     mapping(address => uint256) public balances;
+    address[] private holders;
 
     event Minted(address indexed recipient, uint256 amount);
     event Burned(address indexed from, uint256 amount);
@@ -31,5 +32,19 @@ contract DefiStableCoin is Ownable {
 
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
+    }
+
+    function totalSupply() external view returns (uint256) {
+        uint256 supply = 0;
+        for (uint256 i = 0; i < holders.length; i++) {
+            supply += balances[holders[i]];
+        }
+        return supply;
+    }
+
+    function _addHolder(address account) internal {
+        if (balances[account] == 0) {
+            holders.push(account);
+        }
     }
 }
