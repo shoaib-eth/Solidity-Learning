@@ -19,4 +19,17 @@ contract DefiStableCoin is Ownable {
         balances[from] -= amount;
         emit Burned(from, amount);
     }
+
+    function transfer(address to, uint256 amount) external {
+        require(
+            balances[msg.sender] >= amount,
+            "Not enough balance to transfer"
+        );
+        balances[msg.sender] -= amount;
+        balances[to] += amount;
+    }
+
+    function balanceOf(address account) external view returns (uint256) {
+        return balances[account];
+    }
 }
