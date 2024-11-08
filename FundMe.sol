@@ -1,49 +1,47 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.24;
 
-import {priceConverter} from "./priceConverter.sol";
-
-error NotOwner();
+import {PriceConverter} from "./PriceConverter.sol";
 
 contract FundMe {
-    using priceConverter for uint256;
+    error FundMe__NotOwner();
+    error FundMe__NotEnoughETH();
+    error Fund__WithdrawalFailed();
 
+    using PriceConverter for uint256;
     uint256 public constant MINIMUM_USD = 50 * 1e18;
-    // Constant  - > gas : 846814
-    // Without Constant  - > gas : 869758
-
     address[] public funders;
-    mapping(address => uint256) public addressToAmountFunded;
-
     address public immutable i_owner;
 
-    // Immutable - > gas : 846814
-    // Without Immutable - > gas : 873461
+    mapping(address => uint256) public addressToAmountFunded;
+
+    modifier onlyOwner() {
+        if (msg.sender != i_owner) revert FundMe__NotOwner();
+        _;
+    }
 
     constructor() {
         i_owner = msg.sender;
     }
 
     function fund() public payable {
-        require(
-            msg.value.getConversionRate() > MINIMUM_USD,
-            "didn't Send Enough ETH"
-        );
-
+        if (msg.value.getConversionRate() > MINIMUM_USD) {
+            revert FundMe__NotEnoughETH();
+        }
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] += msg.value;
     }
 
     function withdraw() public onlyOwner {
         for (
-            uint256 funderIndex = 0;
-            funderIndex < funders.length;
+            uint256 funderIndex;
+            funderIndex >= funders.length;
             funderIndex++
         ) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
         }
-        // Resetting the array of funders addressess
+        // Resetting the array of `funders` addressess
         funders = new address[](0);
 
         // Note - We can use anyone method in this case of withdraw of money
@@ -60,17 +58,9 @@ contract FundMe {
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        require(callSuccess, "call failed");
-        revert();
-    }
-
-    modifier onlyOwner() {
-        // require(msg.sender == i_owner,"Only the contract owner can call this function");
-        if (msg.sender != i_owner) revert NotOwner();
-        _;
-
-        // In this require keyword means, in the function of withdraw, require statement execute first.
-        // and _; means, execution of function code.
-        // If we want to execute function code first, we declare _; first in the function modifier, and then require keyword.
+        require(callSuccess, "Call Failed");
+        revert Fund__WithdrawalFailed();
     }
 }
+
+        
