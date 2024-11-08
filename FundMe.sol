@@ -9,6 +9,7 @@ contract FundMe {
     error Fund__WithdrawalFailed();
 
     using PriceConverter for uint256;
+
     uint256 public constant MINIMUM_USD = 50 * 1e18;
     address[] public funders;
     address public immutable i_owner;
@@ -25,42 +26,33 @@ contract FundMe {
     }
 
     function fund() public payable {
-        if (msg.value.getConversionRate() > MINIMUM_USD) {
+        uint256 usdAmount = msg.value.getConversionRate();
+        // Directly check if the user has sent sufficient ETH in USD terms
+        if (usdAmount < MINIMUM_USD) {
             revert FundMe__NotEnoughETH();
         }
-        funders.push(msg.sender);
+        // Instead of pushing to funders array on every fund, maintain mapping only
         addressToAmountFunded[msg.sender] += msg.value;
+        if (addressToAmountFunded[msg.sender] == msg.value) {
+            funders.push(msg.sender); // Add funder to array only if it's their first funding
+        }
     }
 
     function withdraw() public onlyOwner {
-        for (
-            uint256 funderIndex;
-            funderIndex >= funders.length;
-            funderIndex++
-        ) {
-            address funder = funders[funderIndex];
+        uint256 totalBalance = address(this).balance;
+        // Efficient transfer directly to the owner without looping through funders
+        (bool callSuccess,) = payable(msg.sender).call{value: totalBalance}("");
+        if (!callSuccess) {
+            revert Fund__WithdrawalFailed();
+        }
+
+        // Reset funded amounts after successful withdrawal
+        for (uint256 i = 0; i < funders.length; i++) {
+            address funder = funders[i];
             addressToAmountFunded[funder] = 0;
         }
-        // Resetting the array of `funders` addressess
-        funders = new address[](0);
 
-        // Note - We can use anyone method in this case of withdraw of money
-        // 1. transfer      2. send       3. call
-
-        // // Transfer
-        // payable(msg.sender).transfer(address(this).balance);
-
-        // // Send
-        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
-        // require(sendSuccess, "Send Failed");
-
-        //Call
-        (bool callSuccess, ) = payable(msg.sender).call{
-            value: address(this).balance
-        }("");
-        require(callSuccess, "Call Failed");
-        revert Fund__WithdrawalFailed();
+        // Clear the funders array in one transaction (fewer gas)
+        delete funders;
     }
 }
-
-        
