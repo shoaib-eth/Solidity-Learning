@@ -19,4 +19,11 @@ contract AirdropToken is ERC20, Ownable {
             _transfer(msg.sender, recipients[i], amount);
         }
     }
+
+    // Function to withdraw any ERC20 token from the contract
+    function withdrawERC20(address tokenAddress) external onlyOwner {
+        IERC20 token = IERC20(tokenAddress);
+        uint256 balance = token.balanceOf(address(this));
+        token.transfer(msg.sender, balance);
+    }
 }
