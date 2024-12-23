@@ -15,4 +15,8 @@ contract counter {
     function getCounterValue() public view returns (uint256) {
         return count;
     }
+
+    function resetCounter() public {
+        count = 0;
+    }
 }
