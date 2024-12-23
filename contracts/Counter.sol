@@ -19,4 +19,8 @@ contract counter {
     function resetCounter() public {
         count = 0;
     }
+
+    function setCounterValue(uint256 _count) public {
+        count = _count;
+    }
 }
