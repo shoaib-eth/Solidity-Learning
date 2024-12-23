@@ -11,4 +11,8 @@ contract counter {
     function decrement() public {
         count -= 1;
     }
+
+    function getCounterValue() public view returns (uint256) {
+        return count;
+    }
 }
