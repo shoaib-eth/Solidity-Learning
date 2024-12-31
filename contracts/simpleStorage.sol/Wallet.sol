@@ -36,4 +36,8 @@ contract Wallet {
     function getOwner() public view returns (address) {
         return owner;
     }
+
+    function getContractAddress() public view returns (address) {
+        return address(this);
+    }
 }
