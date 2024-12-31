@@ -20,4 +20,12 @@ contract Wallet {
         balance -= _amount;
         payable(msg.sender).transfer(_amount);
     }
+
+    function transfer(address _to, uint256 _amount) public {
+        require(_amount <= balance, "Insufficient balance");
+        require(msg.sender == owner, "You are not the owner");
+
+        balance -= _amount;
+        payable(_to).transfer(_amount);
+    }
 }
