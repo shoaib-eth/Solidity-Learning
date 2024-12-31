@@ -60,4 +60,8 @@ contract Wallet {
     function getSenderContractAddress() public view returns (address) {
         return address(msg.sender);
     }
+
+    function getSenderOwner() public view returns (address) {
+        return owner;
+    }
 }
