@@ -40,4 +40,8 @@ contract Wallet {
     function getContractAddress() public view returns (address) {
         return address(this);
     }
+
+    function getContractBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
 }
