@@ -28,4 +28,8 @@ contract Wallet {
         balance -= _amount;
         payable(_to).transfer(_amount);
     }
+
+    function getBalance() public view returns (uint256) {
+        return balance;
+    }
 }
