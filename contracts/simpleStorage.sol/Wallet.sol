@@ -52,4 +52,8 @@ contract Wallet {
     function getSenderBalance() public view returns (uint256) {
         return msg.sender.balance;
     }
+
+    function getSenderContractBalance() public view returns (uint256) {
+        return address(msg.sender).balance;
+    }
 }
