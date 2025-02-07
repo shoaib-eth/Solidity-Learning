@@ -49,7 +49,11 @@ contract NftRaffle is Ownable {
         raffleEndTime = block.timestamp + (raffleEndTime - block.timestamp);
     }
 
-    function withdrawFunds() external onlyOwner {
-        payable(owner()).transfer(address(this).balance);
+    function transferPrizeToWinner(address winner) external onlyOwner {
+        require(block.timestamp >= raffleEndTime, "Raffle is still ongoing");
+        require(participants.length > 0, "No participants in the raffle");
+
+        uint256 prizeAmount = address(this).balance;
+        payable(winner).transfer(prizeAmount);
     }
 }
