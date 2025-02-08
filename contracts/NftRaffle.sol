@@ -4,7 +4,6 @@ pragma solidity 0.8.24;
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "@openzeppelin/contracts/utils/cryptography/Random.sol";
 
 /**
  * @title NftRaffle
@@ -16,6 +15,8 @@ contract NftRaffle is Ownable {
     uint256 public ticketPrice;
     address[] public participants;
     bytes32 public merkleRoot;
+    address public feesAddress;
+    uint256 public feesCollected;
 
     event RaffleEntered(address indexed participant);
     event WinnerSelected(address indexed winner);
@@ -26,12 +27,20 @@ contract NftRaffle is Ownable {
      * @param _raffleDuration Duration of the raffle in seconds.
      * @param _ticketPrice Price of a single raffle ticket.
      * @param _merkleRoot Root of the Merkle Tree for whitelist verification.
+     * @param _feesAddress Address where the fees will be collected.
      */
-    constructor(address _nftAddress, uint256 _raffleDuration, uint256 _ticketPrice, bytes32 _merkleRoot) {
+    constructor(
+        address _nftAddress,
+        uint256 _raffleDuration,
+        uint256 _ticketPrice,
+        bytes32 _merkleRoot,
+        address _feesAddress
+    ) {
         nft = IERC721(_nftAddress);
         raffleEndTime = block.timestamp + _raffleDuration;
         ticketPrice = _ticketPrice;
         merkleRoot = _merkleRoot;
+        feesAddress = _feesAddress;
     }
 
     /**
@@ -47,6 +56,10 @@ contract NftRaffle is Ownable {
 
         participants.push(msg.sender);
         emit RaffleEntered(msg.sender);
+
+        // Collect fees
+        uint256 fees = (msg.value * 20) / 100;
+        feesCollected += fees;
     }
 
     /**
@@ -57,11 +70,16 @@ contract NftRaffle is Ownable {
         require(block.timestamp >= raffleEndTime, "Raffle is still ongoing");
         require(participants.length > 0, "No participants in the raffle");
 
-        uint256 randomIndex = Random.random() % participants.length;
+        uint256 randomIndex =
+            uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % participants.length;
         address winner = participants[randomIndex];
 
         nft.transferFrom(owner(), winner, 1); // Assuming tokenId is 1
         emit WinnerSelected(winner);
+
+        // Transfer prize to winner
+        uint256 prizeAmount = (address(this).balance - feesCollected) * 80 / 100;
+        payable(winner).transfer(prizeAmount);
 
         // Reset the raffle
         delete participants;
@@ -69,15 +87,12 @@ contract NftRaffle is Ownable {
     }
 
     /**
-     * @dev Function to transfer the prize amount to the winner.
+     * @dev Function to withdraw collected fees.
      * Can only be called by the owner.
-     * @param winner Address of the winner.
      */
-    function transferPrizeToWinner(address winner) external onlyOwner {
-        require(block.timestamp >= raffleEndTime, "Raffle is still ongoing");
-        require(participants.length > 0, "No participants in the raffle");
-
-        uint256 prizeAmount = address(this).balance;
-        payable(winner).transfer(prizeAmount);
+    function withdrawFees() external onlyOwner {
+        uint256 amount = feesCollected;
+        feesCollected = 0;
+        payable(feesAddress).transfer(amount);
     }
 }
