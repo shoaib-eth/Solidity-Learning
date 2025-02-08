@@ -109,4 +109,11 @@ contract NftRaffle is Ownable {
     function getBalance() external view returns (uint256) {
         return address(this).balance;
     }
+
+    /**
+     * @dev Function to get the fees collected.
+     */
+    function getFeesCollected() external view returns (uint256) {
+        return feesCollected;
+    }
 }
