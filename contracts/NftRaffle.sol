@@ -95,4 +95,11 @@ contract NftRaffle is Ownable {
         feesCollected = 0;
         payable(feesAddress).transfer(amount);
     }
+
+    /**
+     * @dev Function to get the list of participants.
+     */
+    function getParticipants() external view returns (address[] memory) {
+        return participants;
+    }
 }
