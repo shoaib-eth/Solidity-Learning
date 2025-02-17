@@ -13,22 +13,55 @@ contract DatingApp {
     mapping(address => Profile) public profiles;
     mapping(address => address[]) public matches;
 
+    /// @notice Emitted when a new profile is created
+    /// @param user The address of the user who created the profile
+    /// @param name The name of the user
+    /// @param age The age of the user
+    /// @param gender The gender of the user
+    /// @param bio The bio of the user
     event ProfileCreated(address indexed user, string name, uint256 age, string gender, string bio);
+
+    /// @notice Emitted when a profile is updated
+    /// @param user The address of the user who updated the profile
+    /// @param name The new name of the user
+    /// @param age The new age of the user
+    /// @param gender The new gender of the user
+    /// @param bio The new bio of the user
     event ProfileUpdated(address indexed user, string name, uint256 age, string gender, string bio);
+
+    /// @notice Emitted when a user likes another user's profile
+    /// @param from The address of the user who liked the profile
+    /// @param to The address of the user whose profile was liked
     event Liked(address indexed from, address indexed to);
+
+    /// @notice Emitted when two users match
+    /// @param user1 The address of the first user
+    /// @param user2 The address of the second user
     event Matched(address indexed user1, address indexed user2);
 
+    /// @notice Modifier to check if a profile exists for a given user
+    /// @param user The address of the user to check
     modifier profileExists(address user) {
         require(bytes(profiles[user].name).length > 0, "Profile does not exist");
         _;
     }
 
+    /// @notice Create a new profile
+    /// @param _name The name of the user
+    /// @param _age The age of the user
+    /// @param _gender The gender of the user
+    /// @param _bio The bio of the user
     function createProfile(string memory _name, uint256 _age, string memory _gender, string memory _bio) public {
         require(bytes(profiles[msg.sender].name).length == 0, "Profile already exists");
         profiles[msg.sender] = Profile(_name, _age, _gender, _bio, new address[](0));
         emit ProfileCreated(msg.sender, _name, _age, _gender, _bio);
     }
 
+    /// @notice Update an existing profile
+    /// @param _name The new name of the user
+    /// @param _age The new age of the user
+    /// @param _gender The new gender of the user
+    /// @param _bio The new bio of the user
     function updateProfile(string memory _name, uint256 _age, string memory _gender, string memory _bio)
         public
         profileExists(msg.sender)
@@ -40,6 +73,8 @@ contract DatingApp {
         emit ProfileUpdated(msg.sender, _name, _age, _gender, _bio);
     }
 
+    /// @notice Like another user's profile
+    /// @param _to The address of the user whose profile is being liked
     function likeProfile(address _to) public profileExists(msg.sender) profileExists(_to) {
         require(msg.sender != _to, "You cannot like your own profile");
         profiles[_to].likes.push(msg.sender);
@@ -52,6 +87,10 @@ contract DatingApp {
         }
     }
 
+    /// @notice Check if a user is liked by another user
+    /// @param _user The address of the user to check
+    /// @param _likedBy The address of the user who might have liked the profile
+    /// @return bool True if the user is liked by the other user, false otherwise
     function isLikedBy(address _user, address _likedBy) internal view returns (bool) {
         address[] memory likes = profiles[_user].likes;
         for (uint256 i = 0; i < likes.length; i++) {
@@ -62,6 +101,13 @@ contract DatingApp {
         return false;
     }
 
+    /// @notice Get the profile of a user
+    /// @param _user The address of the user whose profile is being requested
+    /// @return name The name of the user
+    /// @return age The age of the user
+    /// @return gender The gender of the user
+    /// @return bio The bio of the user
+    /// @return likes The addresses of the users who liked this profile
     function getProfile(address _user)
         public
         view
@@ -72,6 +118,9 @@ contract DatingApp {
         return (profile.name, profile.age, profile.gender, profile.bio, profile.likes);
     }
 
+    /// @notice Get the matches of a user
+    /// @param _user The address of the user whose matches are being requested
+    /// @return The addresses of the users who matched with this user
     function getMatches(address _user) public view profileExists(_user) returns (address[] memory) {
         return matches[_user];
     }
