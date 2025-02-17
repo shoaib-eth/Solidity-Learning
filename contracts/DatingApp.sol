@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
+/*
+    * DatingApp
+    * A simple dating app smart contract that allows users to create profiles, like other users' profiles, and match with other users.
+*/
+
 contract DatingApp {
     struct Profile {
         string name;
@@ -10,8 +15,8 @@ contract DatingApp {
         address[] likes;
     }
 
-    mapping(address => Profile) public profiles;  // Mapping of user addresses to profiles
-    mapping(address => address[]) public matches;  // Mapping of user addresses to matches
+    mapping(address => Profile) public profiles; // Mapping of user addresses to profiles
+    mapping(address => address[]) public matches; // Mapping of user addresses to matches
 
     /// @notice Emitted when a new profile is created
     /// @param user The address of the user who created the profile
