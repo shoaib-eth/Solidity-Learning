@@ -132,13 +132,21 @@ contract DatingApp {
         return matches[_user];
     }
 
+    /**
+     * @notice Deletes the profile of the caller.
+     * @dev This function removes the profile and matches of the caller from the storage.
+     * @custom:modifier profileExists Ensures that the profile of the caller exists before deletion.
+     */
     function deleteProfile() public profileExists(msg.sender) {
         delete profiles[msg.sender];
         delete matches[msg.sender];
         profileCount--;
     }
 
-    /// @return The total number of profiles
+    /**
+     * @notice Returns the total number of profiles.
+     * @return The total number of profiles.
+     */
     function getTotalProfiles() public view returns (uint256) {
         return profileCount;
     }
