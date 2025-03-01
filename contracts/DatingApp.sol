@@ -129,4 +129,10 @@ contract DatingApp {
     function getMatches(address _user) public view profileExists(_user) returns (address[] memory) {
         return matches[_user];
     }
+
+    /// @notice Delete a profile
+    function deleteProfile() public profileExists(msg.sender) {
+        delete profiles[msg.sender];
+        delete matches[msg.sender];
+    }
 }
