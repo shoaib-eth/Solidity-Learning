@@ -150,4 +150,11 @@ contract DatingApp {
     function getTotalProfiles() public view returns (uint256) {
         return profileCount;
     }
+
+    /// @notice Get the total number of matches for a user
+    /// @param _user The address of the user whose matches count is being requested
+    /// @return The total number of matches
+    function getTotalMatches(address _user) public view returns (uint256) {
+        return matches[_user].length;
+    }
 }
