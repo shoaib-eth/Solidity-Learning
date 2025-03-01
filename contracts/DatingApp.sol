@@ -135,4 +135,10 @@ contract DatingApp {
         delete profiles[msg.sender];
         delete matches[msg.sender];
     }
+
+    /// @notice Get the total number of profiles
+    /// @return The total number of profiles
+    function getTotalProfiles() public view returns (uint256) {
+        return address(this).balance;
+    }
 }
