@@ -16,6 +16,7 @@ contract DatingApp {
     }
 
     mapping(address => Profile) public profiles; // Mapping of user addresses to profiles
+    uint256 public profileCount; // Counter for the total number of profiles
     mapping(address => address[]) public matches; // Mapping of user addresses to matches
 
     /// @notice Emitted when a new profile is created
@@ -58,7 +59,8 @@ contract DatingApp {
     /// @param _bio The bio of the user
     function createProfile(string memory _name, uint256 _age, string memory _gender, string memory _bio) public {
         require(bytes(profiles[msg.sender].name).length == 0, "Profile already exists");
-        profiles[msg.sender] = Profile(_name, _age, _gender, _bio, new address[](0));
+        profileCount++;
+        emit ProfileCreated(msg.sender, _name, _age, _gender, _bio);
         emit ProfileCreated(msg.sender, _name, _age, _gender, _bio);
     }
 
@@ -130,15 +132,14 @@ contract DatingApp {
         return matches[_user];
     }
 
-    /// @notice Delete a profile
     function deleteProfile() public profileExists(msg.sender) {
         delete profiles[msg.sender];
         delete matches[msg.sender];
+        profileCount--;
     }
 
-    /// @notice Get the total number of profiles
     /// @return The total number of profiles
     function getTotalProfiles() public view returns (uint256) {
-        return address(this).balance;
+        return profileCount;
     }
 }
