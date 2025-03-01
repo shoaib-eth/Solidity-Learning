@@ -157,4 +157,12 @@ contract DatingApp {
     function getTotalMatches(address _user) public view returns (uint256) {
         return matches[_user].length;
     }
+
+    /// @notice Get the address of the user at a specific index in the matches array
+    /// @param _user The address of the user whose match is being requested
+    /// @param _index The index of the match
+    /// @return The address of the user at the specified index
+    function getMatchAtIndex(address _user, uint256 _index) public view returns (address) {
+        return matches[_user][_index];
+    }
 }
