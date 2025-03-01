@@ -165,4 +165,11 @@ contract DatingApp {
     function getMatchAtIndex(address _user, uint256 _index) public view returns (address) {
         return matches[_user][_index];
     }
+
+    /// @notice Get the total number of likes for a user
+    /// @param _user The address of the user whose likes count is being requested
+    /// @return The total number of likes
+    function getTotalLikes(address _user) public view returns (uint256) {
+        return profiles[_user].likes.length;
+    }
 }
