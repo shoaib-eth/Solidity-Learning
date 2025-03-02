@@ -4,6 +4,14 @@ pragma solidity 0.8.24;
 /*
     * DatingApp
     * A simple dating app smart contract that allows users to create profiles, like other users' profiles, and match with other users.
+    * Users can create a profile with their name, age, gender, and bio.
+    * Users can like other users' profiles, and if two users like each other, they are considered a match.
+    * Users can update their profile, delete their profile, and view their matches.
+    * Users can also view the profiles they have liked and the profiles that have liked them.
+    * The contract keeps track of the total number of profiles and matches.
+    * The contract is implemented using Solidity version 0.8.24.
+    * The contract uses events to emit profile creation, profile update, like, and match events.
+    * The contract uses modifiers to check if a profile exists before updating or deleting it.
 */
 
 contract DatingApp {
