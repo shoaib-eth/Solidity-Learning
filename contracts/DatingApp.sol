@@ -187,4 +187,12 @@ contract DatingApp {
     function getTotalProfilesLiked(address _user) public view returns (uint256) {
         return profiles[_user].likes.length;
     }
+
+    /// @notice Get the address of the user whose profile was liked at a specific index
+    /// @param _user The address of the user whose liked profiles are being requested
+    /// @param _index The index of the liked profile
+    /// @return The address of the user whose profile was liked at the specified index
+    function getProfileLikedAtIndex(address _user, uint256 _index) public view returns (address) {
+        return profiles[_user].likes[_index];
+    }
 }
