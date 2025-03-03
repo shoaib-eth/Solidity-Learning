@@ -45,4 +45,10 @@ contract FlashLoan is Ownable {
     function ownerBalance() public view returns (uint256) {
         return token.balanceOf(owner());
     }
+
+    /// @notice Transfers ownership of the contract
+    /// @param newOwner The address of the new owner
+    function transferOwnership(address newOwner) public onlyOwner {
+        _transferOwnership(newOwner);
+    }
 }
