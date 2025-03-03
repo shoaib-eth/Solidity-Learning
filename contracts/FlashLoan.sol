@@ -33,4 +33,10 @@ contract FlashLoan is Ownable {
     function withdraw(uint256 amount) public onlyOwner {
         token.transfer(msg.sender, amount);
     }
+
+    /// @notice Returns the balance of the contract
+    /// @return The balance of the contract
+    function balance() public view returns (uint256) {
+        return token.balanceOf(address(this));
+    }
 }
