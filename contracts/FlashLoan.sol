@@ -39,4 +39,10 @@ contract FlashLoan is Ownable {
     function balance() public view returns (uint256) {
         return token.balanceOf(address(this));
     }
+
+    /// @notice Returns the balance of the owner
+    /// @return The balance of the owner
+    function ownerBalance() public view returns (uint256) {
+        return token.balanceOf(owner());
+    }
 }
