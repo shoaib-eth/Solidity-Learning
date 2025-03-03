@@ -51,4 +51,9 @@ contract FlashLoan is Ownable {
     function transferOwnership(address newOwner) public onlyOwner {
         _transferOwnership(newOwner);
     }
+
+    /// @notice Renounces ownership of the contract
+    function renounceOwnership() public onlyOwner {
+        _renounceOwnership();
+    }
 }
