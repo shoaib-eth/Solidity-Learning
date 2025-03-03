@@ -89,3 +89,35 @@ contract FlashLoan is IFlashLoanReceiver, Ownable {
         _renounceOwnership();
     }
 }
+
+contract FlashLoanExample {
+    FlashLoan public flashLoanContract;
+
+    constructor(address _flashLoanContract) {
+        flashLoanContract = FlashLoan(_flashLoanContract);
+    }
+
+    /// @notice Initiates a flash loan from the FlashLoan contract
+    /// @param amount The amount of tokens to borrow
+    function initiateFlashLoan(uint256 amount) public {
+        flashLoanContract.flashLoan(amount);
+    }
+
+    /// @notice Withdraws tokens from the FlashLoan contract
+    /// @param amount The amount of tokens to withdraw
+    function withdrawFromFlashLoanContract(uint256 amount) public {
+        flashLoanContract.withdraw(amount);
+    }
+
+    /// @notice Returns the balance of the FlashLoan contract
+    /// @return The balance of the FlashLoan contract
+    function getFlashLoanContractBalance() public view returns (uint256) {
+        return flashLoanContract.balance();
+    }
+
+    /// @notice Returns the balance of the owner of the FlashLoan contract
+    /// @return The balance of the owner of the FlashLoan contract
+    function getFlashLoanContractOwnerBalance() public view returns (uint256) {
+        return flashLoanContract.ownerBalance();
+    }
+}
