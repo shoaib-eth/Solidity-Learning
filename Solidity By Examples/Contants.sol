@@ -34,4 +34,9 @@ contract Constants {
     function isAddressEqual(address addr) public pure returns (bool) {
         return addr == MY_ADDRESS;
     }
+
+    // Function to demonstrate the use of a constant in a condition
+    function isStringEqual(string memory str) public pure returns (bool) {
+        return keccak256(abi.encodePacked(str)) == keccak256(abi.encodePacked(MY_STRING));
+    }
 }
