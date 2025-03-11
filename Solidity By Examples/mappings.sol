@@ -2,22 +2,29 @@
 pragma solidity 0.8.24;
 
 contract Mappings {
-    // Mapping from address to uint
-    mapping(address => uint256) public myMap;
+    uint256 myNumber;
 
-    function get(address _addr) public view returns (uint256) {
-        // Mapping always returns a value.
-        // If the value was never set, it will return the default value.
-        return myMap[_addr];
+    mapping(address => uint256) public myAddressMapping;
+
+    function setMyNumber(uint256 _myNumber) public {
+        myNumber = _myNumber;
     }
 
-    function set(address _addr, uint256 _i) public {
-        // Update the value at this address
-        myMap[_addr] = _i;
+    function getMyNumber() public view returns (uint256) {
+        return myNumber;
     }
 
-    function remove(address _addr) public {
-        // Reset the value to the default value.
-        delete myMap[_addr];
+    function setMyAddressMapping(uint256 _myNumber) public {
+        myAddressMapping[msg.sender] = _myNumber;
     }
+
+    function getMyAddressMapping() public view returns (uint256) {
+        return myAddressMapping[msg.sender];
+    }
+
+    function getMyAddressMapping(address _address) public view returns (uint256) {
+        return myAddressMapping[_address];
+    }
+
+    
 }
