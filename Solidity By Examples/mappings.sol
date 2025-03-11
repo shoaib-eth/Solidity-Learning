@@ -25,6 +25,4 @@ contract Mappings {
     function getMyAddressMapping(address _address) public view returns (uint256) {
         return myAddressMapping[_address];
     }
-
-    
 }
