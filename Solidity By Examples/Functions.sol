@@ -44,4 +44,9 @@ contract FunctionsExample {
     function subtractAndAdd(uint256 a, uint256 b, uint256 c) public pure returns (uint256) {
         return _subtract(a, b) + c;
     }
+
+    // Function that uses internal and private functions
+    function multiplyAndSubtract(uint256 a, uint256 b, uint256 c) public pure returns (uint256) {
+        return _multiply(a, b) - _subtract(b, c);
+    }
 }
