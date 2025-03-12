@@ -49,4 +49,9 @@ contract FunctionsExample {
     function multiplyAndSubtract(uint256 a, uint256 b, uint256 c) public pure returns (uint256) {
         return _multiply(a, b) - _subtract(b, c);
     }
+
+    // Function that uses internal and private functions
+    function subtractAndMultiply(uint256 a, uint256 b, uint256 c) public pure returns (uint256) {
+        return _subtract(a, b) * _multiply(b, c);
+    }
 }
