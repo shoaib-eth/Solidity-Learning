@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity 0.8.20;
 
+// Import the IERC20 interface from OpenZeppelin
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract TokenSwap {
