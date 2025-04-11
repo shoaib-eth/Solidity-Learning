@@ -2,6 +2,24 @@
 pragma solidity 0.8.20;
 
 // Import the IERC20 interface from OpenZeppelin
+/**
+ * @dev This file imports the IERC20 interface from the OpenZeppelin library.
+ * The IERC20 interface defines the standard functions for ERC20 tokens,
+ * such as transferring tokens, checking balances, and approving allowances.
+ *
+ * Note:
+ * - Ensure that the OpenZeppelin contracts library is installed in your project.
+ * - If you encounter a "File not found" error, verify that the library is properly installed
+ *   and the import path is correct.
+ *
+ * Installation:
+ * To install OpenZeppelin contracts, use the following command:
+ * `npm install @openzeppelin/contracts`
+ *
+ * Documentation:
+ * For more details on the IERC20 interface, refer to the official OpenZeppelin documentation:
+ * https://docs.openzeppelin.com/contracts
+ */
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract TokenSwap {
