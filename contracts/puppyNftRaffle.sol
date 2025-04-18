@@ -57,4 +57,11 @@ contract PuppyNftRaffle is Ownable {
     function getPuppyNftAddress() external view returns (address) {
         return address(puppyNft);
     }
+
+    /**
+     * Fallback function to prevent accidental ETH transfers
+     */
+    receive() external payable {
+        revert("Direct ETH transfers not allowed");
+    }
 }
