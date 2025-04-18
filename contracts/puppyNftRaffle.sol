@@ -64,4 +64,11 @@ contract PuppyNftRaffle is Ownable {
     receive() external payable {
         revert("Direct ETH transfers not allowed");
     }
+
+    /**
+     * Function to withdraw any accidentally sent ETH
+     */
+    function withdraw() external onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+    }
 }
