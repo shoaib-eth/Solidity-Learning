@@ -39,6 +39,9 @@ contract PuppyNftRaffle is Ownable {
         emit WinnerSelected(winner);
     }
 
+    /**
+     * Getter Functions
+     */
     function getParticipants() external view returns (address[] memory) {
         return participants;
     }
