@@ -49,4 +49,8 @@ contract PuppyNftRaffle is Ownable {
     function isRaffleEnded() external view returns (bool) {
         return raffleEnded;
     }
+
+    function getRaffleEndTime() external view returns (uint256) {
+        return raffleEndTime;
+    }
 }
