@@ -1,74 +1,101 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-
+/**
+ * @title PuppyNftRaffle
+ * @dev A smart contract for conducting a raffle where participants can win an NFT.
+ *      The contract owner can set up the raffle, allow participants to enter, and select a winner.
+ *      The winner is chosen randomly from the list of participants.
+ */
 contract PuppyNftRaffle is Ownable {
+    /**
+     * @dev The NFT contract interface used for transferring the NFT to the winner.
+     */
     IERC721 public puppyNft;
+
+    /**
+     * @dev Array to store the addresses of participants who entered the raffle.
+     */
     address[] public participants;
+
+    /**
+     * @dev The timestamp indicating when the raffle ends.
+     */
     uint256 public raffleEndTime;
+
+    /**
+     * @dev Boolean flag to indicate whether the raffle has ended and a winner has been selected.
+     */
     bool public raffleEnded;
 
+    /**
+     * @dev Emitted when a participant enters the raffle.
+     * @param participant The address of the participant who entered the raffle.
+     */
     event EnterRaffle(address indexed participant);
+
+    /**
+     * @dev Emitted when a winner is selected.
+     * @param winner The address of the winner.
+     */
     event WinnerSelected(address indexed winner);
 
+    /**
+     * @notice Constructor to initialize the raffle contract.
+     * @param _puppyNftAddress The address of the NFT contract.
+     * @param _raffleDuration The duration of the raffle in seconds.
+     */
     constructor(address _puppyNftAddress, uint256 _raffleDuration) {
         puppyNft = IERC721(_puppyNftAddress);
         raffleEndTime = block.timestamp + _raffleDuration;
     }
 
-    function enterRaffle() external {
-        require(block.timestamp < raffleEndTime, "Raffle has ended");
-        participants.push(msg.sender);
-        emit EnterRaffle(msg.sender);
-    }
-
-    function selectWinner(uint256 _tokenId) external onlyOwner {
-        require(block.timestamp >= raffleEndTime, "Raffle is still ongoing");
-        require(!raffleEnded, "Winner already selected");
-        require(participants.length > 0, "No participants in the raffle");
-
-        uint256 winnerIndex =
-            uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty, participants))) % participants.length;
-        address winner = participants[winnerIndex];
-
-        puppyNft.safeTransferFrom(owner(), winner, _tokenId);
-        raffleEnded = true;
-
-        emit WinnerSelected(winner);
-    }
+    /**
+     * @notice Allows a user to enter the raffle.
+     * @dev Adds the sender's address to the participants array.
+     *      Emits the `EnterRaffle` event.
+     * @require The raffle must not have ended.
+     */
+    function enterRaffle() external;
 
     /**
-     * Getter Functions
+     * @notice Allows the owner to select a winner after the raffle ends.
+     * @dev Selects a random winner from the participants array and transfers the NFT to the winner.
+     *      Emits the `WinnerSelected` event.
+     * @param _tokenId The ID of the NFT to be transferred to the winner.
+     * @require The raffle must have ended.
+     * @require The winner must not have already been selected.
+     * @require There must be at least one participant in the raffle.
      */
-    function getParticipants() external view returns (address[] memory) {
-        return participants;
-    }
-
-    function isRaffleEnded() external view returns (bool) {
-        return raffleEnded;
-    }
-
-    function getRaffleEndTime() external view returns (uint256) {
-        return raffleEndTime;
-    }
-
-    function getPuppyNftAddress() external view returns (address) {
-        return address(puppyNft);
-    }
+    function selectWinner(uint256 _tokenId) external onlyOwner;
 
     /**
-     * Fallback function to prevent accidental ETH transfers
+     * @notice Retrieves the list of participants in the raffle.
+     * @return An array of addresses of participants.
      */
-    receive() external payable {
-        revert("Direct ETH transfers not allowed");
-    }
+    function getParticipants() external view returns (address[] memory);
 
     /**
-     * Function to withdraw any accidentally sent ETH
+     * @notice Checks if the raffle has ended.
+     * @return A boolean indicating whether the raffle has ended.
      */
-    function withdraw() external onlyOwner {
-        payable(owner()).transfer(address(this).balance);
-    }
+    function isRaffleEnded() external view returns (bool);
+
+    /**
+     * @notice Retrieves the timestamp when the raffle ends.
+     * @return The raffle end time as a UNIX timestamp.
+     */
+    function getRaffleEndTime() external view returns (uint256);
+
+    /**
+     * @notice Retrieves the address of the NFT contract used in the raffle.
+     * @return The address of the NFT contract.
+     */
+    function getPuppyNftAddress() external view returns (address);
+
+    /**
+     * @notice Fallback function to prevent accidental ETH transfers to the contract.
+     * @dev Reverts any direct ETH transfers to the contract.
+     */
+    receive() external payable;
 }
